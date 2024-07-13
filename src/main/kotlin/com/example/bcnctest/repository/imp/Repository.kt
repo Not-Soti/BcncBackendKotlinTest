@@ -2,6 +2,8 @@ package com.example.bcnctest.repository.imp
 
 import com.example.bcnctest.data.pub.ILocalData
 import com.example.bcnctest.data.pub.IRemoteData
+import com.example.bcnctest.model.AlbumEntity
+import com.example.bcnctest.repository.mappers.toEntity
 import com.example.bcnctest.repository.pub.IRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
@@ -12,8 +14,16 @@ class Repository(
     @Autowired private val remoteData: IRemoteData
 ) : IRepository {
 
-    override fun getAlbums() {
-        TODO("Not yet implemented")
+    override fun getAlbums(): List<AlbumEntity> {
+        var albums = localData.getAlbums()
+
+        //If albums are not stored locally then get from remote and cache them
+        if(albums.isEmpty()){
+            albums = remoteData.getAlbums()
+            localData.saveAlbums(albums)
+        }
+
+        return albums.map { it.toEntity() }
     }
 
 }

@@ -9,4 +9,5 @@ class AlbumService(
     private val repository: IRepository
 ) : IAlbumService {
 
+    override fun getAlbums() = repository.getAlbums()
 }
