@@ -1,7 +1,8 @@
 package com.example.bcnctest.data.imp
 
+import com.example.bcnctest.data.dto.AlbumDto
+import com.example.bcnctest.data.dto.PhotoDto
 import com.example.bcnctest.data.pub.IRemoteData
-import com.example.bcnctest.repository.dto.AlbumDto
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpMethod
 import org.springframework.http.ResponseEntity
@@ -26,4 +27,16 @@ class RemoteData : IRemoteData {
         return albums.body ?: emptyList() //TODO - handle errors
     }
 
+    override fun getPhotosForAlbum(albumId: String) : List<PhotoDto> {
+        val photos : ResponseEntity<List<PhotoDto>> =
+            restTemplate.exchange(
+                Constants.JsonPlaceholderApi.photos,
+                HttpMethod.GET,
+                null,
+                object : ParameterizedTypeReference<List<PhotoDto>>(){},
+                albumId
+            )
+
+        return photos.body ?: emptyList() //TODO - handle errors
+    }
 }

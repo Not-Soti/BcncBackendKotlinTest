@@ -3,6 +3,7 @@ package com.example.bcnctest.repository.imp
 import com.example.bcnctest.data.pub.ILocalData
 import com.example.bcnctest.data.pub.IRemoteData
 import com.example.bcnctest.model.AlbumEntity
+import com.example.bcnctest.model.PhotoEntity
 import com.example.bcnctest.repository.mappers.toEntity
 import com.example.bcnctest.repository.pub.IRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -24,6 +25,17 @@ class Repository(
         }
 
         return albums.map { it.toEntity() }
+    }
+
+    override fun getPhotosForAlbum(albumId: String) : List<PhotoEntity>{
+        var photos = localData.getPhotosForAlbum(albumId)
+
+        if(photos.isEmpty()){
+            photos = remoteData.getPhotosForAlbum(albumId)
+            localData.savePhotosForAlbum(albumId, photos)
+        }
+
+        return photos.map { it.toEntity() }
     }
 
 }

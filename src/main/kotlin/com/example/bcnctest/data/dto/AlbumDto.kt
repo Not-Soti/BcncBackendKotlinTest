@@ -1,4 +1,4 @@
-package com.example.bcnctest.repository.dto
+package com.example.bcnctest.data.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
