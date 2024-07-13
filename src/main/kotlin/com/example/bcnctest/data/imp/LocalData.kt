@@ -16,15 +16,7 @@ class LocalData : ILocalData {
         this.albums.addAll(albums)
     }
 
-    override fun getPhotosForAlbum(albumId: String) : List<PhotoDto> {
-        val photos = photosInAlbum[albumId]
-
-        if (photos == null) {
-            //TODO - Handle errors
-        }
-
-        return photos ?: emptyList()
-    }
+    override fun getPhotosForAlbum(albumId: String) = photosInAlbum[albumId]
 
     override fun savePhotosForAlbum(albumId: String, photos: List<PhotoDto>) {
         photosInAlbum[albumId] = photos

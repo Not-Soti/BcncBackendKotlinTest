@@ -2,6 +2,7 @@ package com.example.bcnctest.repository.imp
 
 import com.example.bcnctest.data.pub.ILocalData
 import com.example.bcnctest.data.pub.IRemoteData
+import com.example.bcnctest.exceptions.CustomExceptions
 import com.example.bcnctest.model.AlbumEntity
 import com.example.bcnctest.model.PhotoEntity
 import com.example.bcnctest.repository.mappers.toEntity
@@ -21,6 +22,11 @@ class Repository(
         //If albums are not stored locally then get from remote and cache them
         if(albums.isEmpty()){
             albums = remoteData.getAlbums()
+
+            if(albums.isEmpty()){
+                throw CustomExceptions.AlbumsNotAvailable()
+            }
+
             localData.saveAlbums(albums)
         }
 
@@ -30,8 +36,13 @@ class Repository(
     override fun getPhotosForAlbum(albumId: String) : List<PhotoEntity>{
         var photos = localData.getPhotosForAlbum(albumId)
 
-        if(photos.isEmpty()){
+        if(photos == null){
             photos = remoteData.getPhotosForAlbum(albumId)
+
+            if(photos.isEmpty()){
+                throw CustomExceptions.PhotosNotAvailable(albumId)
+            }
+
             localData.savePhotosForAlbum(albumId, photos)
         }
 

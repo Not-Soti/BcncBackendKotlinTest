@@ -14,6 +14,6 @@ interface ILocalData {
      * Save items in @param albums in local storage
      */
     fun saveAlbums(albums: List<AlbumDto>)
-    fun getPhotosForAlbum(albumId: String): List<PhotoDto>
+    fun getPhotosForAlbum(albumId: String): List<PhotoDto>?
     fun savePhotosForAlbum(albumId: String, photos: List<PhotoDto>)
 }
