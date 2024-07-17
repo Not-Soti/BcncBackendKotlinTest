@@ -15,12 +15,8 @@ class AlbumController(
     @GetMapping
     override fun getAlbums() = service.getAlbums()
 
-    @GetMapping("{albumId}/photos")
-    override fun getPhotosForAlbum(@PathVariable albumId: String) = service.getPhotosForAlbum(albumId)
-
-
-    @ExceptionHandler(CustomExceptions.AlbumsNotAvailable::class)
-    fun handleDuplicatedId(e: CustomExceptions.AlbumsNotAvailable): ResponseEntity<String> =
+    @ExceptionHandler(CustomExceptions::class)
+    fun handleDuplicatedId(e: CustomExceptions): ResponseEntity<String> =
         ResponseEntity(
             e.toJsonResponse(),
             e.responseCode

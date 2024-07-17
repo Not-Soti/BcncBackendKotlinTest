@@ -10,6 +10,4 @@ class AlbumService(
 ) : IAlbumService {
 
     override fun getAlbums() = repository.getAlbums()
-
-    override fun getPhotosForAlbum(albumId: String) = repository.getPhotosForAlbum(albumId)
 }
