@@ -16,9 +16,13 @@ class AlbumController(
     override fun getAlbums() = service.getAlbums()
 
     @ExceptionHandler(CustomExceptions::class)
-    fun handleDuplicatedId(e: CustomExceptions): ResponseEntity<String> =
+    fun handleCustomException(e: CustomExceptions): ResponseEntity<String> =
         ResponseEntity(
             e.toJsonResponse(),
             e.responseCode
         )
+
+    @ExceptionHandler(Exception::class)
+    fun handleException(e: Exception) : ResponseEntity<String> =
+        throw CustomExceptions.UnknownException(e.message.toString())
 }

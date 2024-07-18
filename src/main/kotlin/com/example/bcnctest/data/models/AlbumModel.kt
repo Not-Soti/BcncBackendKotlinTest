@@ -1,8 +1,8 @@
-package com.example.bcnctest.data.dto
+package com.example.bcnctest.data.models
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class AlbumDto(
+data class AlbumModel(
     @JsonProperty("id")
     val id: Int,
 

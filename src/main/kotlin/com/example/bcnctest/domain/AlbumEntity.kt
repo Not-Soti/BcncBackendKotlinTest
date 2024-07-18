@@ -1,4 +1,4 @@
-package com.example.bcnctest.model
+package com.example.bcnctest.domain
 
 data class AlbumEntity (
     val id: String,

@@ -1,8 +1,8 @@
 package com.example.bcnctest.data.imp
 
 import com.example.bcnctest.data.pub.IRemoteData
-import com.example.bcnctest.data.dto.AlbumDto
-import com.example.bcnctest.data.dto.PhotoDto
+import com.example.bcnctest.data.models.AlbumModel
+import com.example.bcnctest.data.models.PhotoModel
 import com.example.bcnctest.exceptions.CustomExceptions
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpMethod
@@ -17,8 +17,8 @@ class RemoteData : IRemoteData {
         this.restTemplate = restTemplate
     }
 
-    override fun getAlbums(): List<AlbumDto> {
-        val albums: ResponseEntity<List<AlbumDto>>
+    override fun getAlbums(): List<AlbumModel> {
+        val albums: ResponseEntity<List<AlbumModel>>
 
         try {
             albums =
@@ -26,13 +26,13 @@ class RemoteData : IRemoteData {
                     Constants.JsonPlaceholderApi.albums,
                     HttpMethod.GET,
                     null,
-                    object : ParameterizedTypeReference<List<AlbumDto>>() {}
+                    object : ParameterizedTypeReference<List<AlbumModel>>() {}
                 )
         } catch (e: RestClientException) {
             throw CustomExceptions.RestClientException(e.message ?: "Unknown root cause getting albums")
         }
 
-        if (albums.body == null) {
+        if (albums.body.isNullOrEmpty()) {
             throw CustomExceptions.AlbumsNotAvailable()
         }
 
@@ -40,15 +40,15 @@ class RemoteData : IRemoteData {
     }
 
 
-    override fun getPhotosForAlbum(albumId: String): List<PhotoDto> {
-        val photos: ResponseEntity<List<PhotoDto>>
+    override fun getPhotosForAlbum(albumId: String): List<PhotoModel> {
+        val photos: ResponseEntity<List<PhotoModel>>
         try{
             photos =
                 restTemplate.exchange(
                     Constants.JsonPlaceholderApi.photos,
                     HttpMethod.GET,
                     null,
-                    object : ParameterizedTypeReference<List<PhotoDto>>() {},
+                    object : ParameterizedTypeReference<List<PhotoModel>>() {},
                     albumId
                 )
         } catch (e: RestClientException) {

@@ -11,13 +11,13 @@ sealed class CustomExceptions(
 
     class AlbumsNotAvailable : CustomExceptions(
         HttpStatus.NOT_FOUND,
-        "NotAlbumsAvailable",
+        "AlbumsNotAvailableException",
         "There are no albums available in the system"
     )
 
     class PhotosNotAvailable(albumId: String) : CustomExceptions(
         HttpStatus.NOT_FOUND,
-        "PhotosNotAvailable",
+        "PhotosNotAvailableException",
         "There are no photos available for album with id $albumId"
     )
 
@@ -27,10 +27,16 @@ sealed class CustomExceptions(
         message
     )
 
+    class UnknownException(message: String) : CustomExceptions(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        "UnknownException",
+        message
+    )
+
     fun toJsonResponse(): String =
         "{" +
-        "\"exception\":\" ${this.name}\"," +
-        "\"message\": \" ${this.message}\"" +
+        "\"exception\":\"${this.name}\"," +
+        "\"message\": \"${this.message}\"" +
         "}"
 
 }

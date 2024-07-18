@@ -1,6 +1,6 @@
 package com.example.bcnctest.repository.pub
 
-import com.example.bcnctest.model.AlbumEntity
+import com.example.bcnctest.domain.AlbumEntity
 
 interface IRepository {
 

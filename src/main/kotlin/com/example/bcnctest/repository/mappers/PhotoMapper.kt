@@ -1,10 +1,10 @@
 package com.example.bcnctest.repository.mappers
 
 import java.net.URI
-import com.example.bcnctest.data.dto.PhotoDto
-import com.example.bcnctest.model.PhotoEntity
+import com.example.bcnctest.data.models.PhotoModel
+import com.example.bcnctest.domain.PhotoEntity
 
-fun PhotoDto.toEntity() =
+fun PhotoModel.toEntity() =
     PhotoEntity(
         albumId = albumId.toString(),
         id = id.toString(),

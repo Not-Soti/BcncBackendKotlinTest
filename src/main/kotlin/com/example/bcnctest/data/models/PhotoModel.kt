@@ -1,6 +1,6 @@
-package com.example.bcnctest.data.dto
+package com.example.bcnctest.data.models
 
-data class PhotoDto (
+data class PhotoModel (
     val albumId: Int,
     val id: Int,
     val title: String,

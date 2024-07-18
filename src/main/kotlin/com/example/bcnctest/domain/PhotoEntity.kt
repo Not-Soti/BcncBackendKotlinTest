@@ -1,4 +1,4 @@
-package com.example.bcnctest.model
+package com.example.bcnctest.domain
 
 import java.net.URL
 

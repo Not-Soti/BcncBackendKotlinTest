@@ -1,11 +1,11 @@
 package com.example.bcnctest.repository.imp
 
-import com.example.bcnctest.data.dto.AlbumDto
-import com.example.bcnctest.data.dto.PhotoDto
+import com.example.bcnctest.data.models.AlbumModel
+import com.example.bcnctest.data.models.PhotoModel
 import com.example.bcnctest.data.pub.ILocalData
 import com.example.bcnctest.data.pub.IRemoteData
 import com.example.bcnctest.exceptions.CustomExceptions
-import com.example.bcnctest.model.AlbumEntity
+import com.example.bcnctest.domain.AlbumEntity
 import com.example.bcnctest.repository.mappers.toEntity
 import com.example.bcnctest.repository.pub.IRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -55,28 +55,25 @@ class Repository(
         }
     }
 
-    private fun downloadAlbums(): List<AlbumDto> {
+    private fun downloadAlbums(): List<AlbumModel> {
         val albums = remoteData.getAlbums()
+
         if (albums.isEmpty()) {
             throw CustomExceptions.AlbumsNotAvailable()
         }
-        localData.saveAlbums(albums)
 
+        localData.saveAlbums(albums)
         return albums
     }
 
-    private fun downloadPhotosForAlbum(albumId: String): List<PhotoDto> {
-        var photos = localData.getPhotosForAlbum(albumId)
+    private fun downloadPhotosForAlbum(albumId: String): List<PhotoModel> {
+        val photos = remoteData.getPhotosForAlbum(albumId)
 
-        if (photos == null) {
-            photos = remoteData.getPhotosForAlbum(albumId)
-            if (photos.isEmpty()) {
-                throw CustomExceptions.PhotosNotAvailable(albumId)
-            }
-
-            localData.savePhotosForAlbum(albumId, photos)
+        if (photos.isEmpty()) {
+            throw CustomExceptions.PhotosNotAvailable(albumId)
         }
 
+        localData.savePhotosForAlbum(albumId, photos)
         return photos
     }
 
